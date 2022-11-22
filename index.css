@@ -1,0 +1,214 @@
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    letter-spacing: 1px;
+}
+
+i {
+    color: grey;
+}
+
+/* Banner */
+
+header {
+    background-color: rgb(28, 28, 28);
+    background-image: url("https://c4.wallpaperflare.com/wallpaper/422/750/381/35mm-film-wallpaper-preview.jpg");
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    color: white;
+    text-align: center;
+    padding: 5em;
+    position: relative;
+}
+
+.head-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+h1 {
+    display: inline;
+    font-weight: bold;
+    font-size: 2.75rem;
+    margin: 0px;
+    margin-right: 0.5em;
+}
+
+.navigation-link {
+    text-decoration: none;
+    color: inherit;
+    transform: scale(1.0);
+    transition-property: transform;
+    transition-duration: 120ms;
+}
+
+.navigation-link:hover, .navigation-link:focus {
+    transform: scale(1.1);
+}
+
+/* Search Box */
+
+.search-box {
+    display: flex;
+    background: white;
+    align-items: center;
+    padding: 0em;
+    border-radius: 5px;
+    text-align: left;
+    border: 1px solid #D1D5DB;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    width: 70vw;
+    max-width: 700px;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: -1em auto;
+}
+
+#search-icon{
+    padding: 0.5em 0;
+    margin-left: 0.75em;
+}
+
+#search-input {
+    border: none;
+    padding: 1em;
+    margin-right: auto;
+    flex: 450px 1;
+    font-family: inherit;
+}
+
+#search-btn{
+    align-self: stretch;
+    background: #F9FAFB;;
+    box-sizing: border-box;
+    border: none;
+    border-left: 1px solid #D1D5DB;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+#search-btn:hover, #search-btn:focus {
+    box-shadow: inset 0 0 3px #484848;
+}
+
+/* main */ 
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 3em;
+}
+
+/* Movie-Cards */
+
+.movie-card {
+    max-width: 600px;
+    width: 80%;
+    margin: 1em 3em;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 1fr 3fr;
+    grid-template-areas: 
+    "image title title rating"
+    "image details details button"
+    "image description description description";
+    padding-bottom: 2em;
+    border-bottom: #484848 solid 1px;
+}
+
+.movie-poster {
+    box-sizing: border-box;
+    padding-right: 1em;
+    grid-area: image;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: 300px;
+}
+
+/* rating */
+
+.rating {
+    grid-area: rating;
+}
+
+.fa-star {
+    display: inline;
+    color: gold;
+}
+
+.rating-number {
+    display: inline;
+}
+
+/* Text */
+
+.movie-title {
+    grid-area: title;
+    margin: 0;
+}
+
+.description {
+    grid-area: description;
+    
+    align-self: start;
+    color: #6B7280;
+    line-height: 1.25;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.details {
+    grid-area: details;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 10px;
+    color: #111827;
+    font-size: 0.75rem;
+}
+
+.details > * {
+    margin: 0;
+} 
+
+/* button */
+
+.add-btn {
+    grid-area: button;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    border: none;
+    background: none;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.add-btn > p {
+    margin: 0;
+    color: #111827;
+    font-size: 0.75rem;
+}
+
+.fa-plus {
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-radius: 50%;
+}
+
