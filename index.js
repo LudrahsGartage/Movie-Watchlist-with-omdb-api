@@ -6,23 +6,29 @@ const moviesContainer = document.querySelector("main")
 let searchArray = []
 let moviesArray
 
-searchBtn.addEventListener("click", (e) => setMoviesArray(e))
+searchBtn.addEventListener("click", (e) => handleSearch(e))
 
-function setMoviesArray (e) {
+function handleSearch(e) {
     e.preventDefault()
+    setMoviesArray()
+    render()
+}
+
+function setMoviesArray () {
     fetch(`${apiUrl}&s=${inputText.value}`)
         .then(res => res.json())
         .then(data => {
             console.log(data)
             searchArray = data.Search
             moviesArray = []
-            searchArray.forEach (search => getMovieData(search.Title))
+            searchArray.forEach (search => moviesArray.push(getMovieData(search.Title)))
         })
 }
 
 function getMovieData (title) {
+    console.log(title)
     let movie
-    fetch(`${apiUrl}&t=${inputText.value}`)
+    fetch(`${apiUrl}&t=${title}`)
         .then(res => res.json())
         .then(data => {
             movie = data
@@ -65,5 +71,3 @@ function render() {
         `
     }
 }
-
-render()
