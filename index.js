@@ -29,6 +29,15 @@ async function getMovieData (title) {
 
 async function getMovieCardsHTML () {
     let html
+/**
+ * run a search again in the browser and open the console.
+ * follow the lines of code for the console.log output.
+ * pay particular attention to what is output in the console
+ * and how it is written in the file. and think about that
+ * left to right, top to bottom synchronous code
+ * then think about asyn again and how it gets skipped over.
+ */
+    let timeStamp = Date.now() / 1000
     await moviesArray.forEach(async movie =>{
         const movieData = await movie
         html += `
@@ -50,14 +59,23 @@ async function getMovieCardsHTML () {
             </button>
         </div>
         `
+        console.log('returns after return of html', (Date.now() /1000) - timeStamp) //in s
     })
-    return html
+
+    console.log('runs before async finishes, finishes first',(Date.now()/1000) - timeStamp) //in s
+    return html  //in html nothing gets initialize immediately returns. 
 }
 
 function render() {
     if (searchArray.length) {
        getMovieCardsHTML()
         .then((html) => {
+
+            // html is undefined because of the async function
+            //returning later. so your return value is still
+            //uninitialized
+
+            console.log('returns here after undefined is passed, finishes second',html)
             moviesContainer.innerHTML = html
         })
     } else {
