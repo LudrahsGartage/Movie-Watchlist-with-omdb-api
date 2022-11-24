@@ -27,10 +27,11 @@ async function getMovieData (title) {
     return data
 }
 
-function getMovieCardsHTML () {
-    const cardsHtml = moviesArray.map(async movie =>{
+async function getMovieCardsHTML () {
+    let html
+    await moviesArray.forEach(async movie =>{
         const movieData = await movie
-        const html = (`
+        html += `
         <div class="movie-card">
             <h2 class="movie-title">${movieData.Title}</h2>
             <div class="rating">
@@ -48,19 +49,20 @@ function getMovieCardsHTML () {
                 <p>Watchlist</p>
             </button>
         </div>
-        `)
-        return html
+        `
     })
-    return cardsHtml
+    return html
 }
 
 function render() {
     if (searchArray.length) {
-        const cardsHtml = getMovieCardsHTML()
-        moviesContainer.innerHTML = cardsHtml
+       getMovieCardsHTML()
+        .then((html) => {
+            moviesContainer.innerHTML = html
+        })
     } else {
         moviesContainer.innerHTML = `
-            <h2 style="text-align:center;">Unable to find what you’re looking for. Please try another search.</h2>
+            <h2 style="text-align:center;">Unable to find what you are looking for. Please try another search.</h2>
         `
     }
 }
