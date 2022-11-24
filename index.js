@@ -10,10 +10,10 @@ searchBtn.addEventListener("click", (e) => handleSearch(e))
 
 function handleSearch(e) {
     e.preventDefault()
-    getMoviesArray().then(() => render())
+    setMoviesArray().then(() => render())
 }
 
-async function getMoviesArray () {
+async function setMoviesArray () {
     const res = await fetch(`${apiUrl}&s=${inputText.value}`)
     const data = await res.json()
     searchArray = data.Search
