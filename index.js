@@ -10,43 +10,38 @@ searchBtn.addEventListener("click", (e) => handleSearch(e))
 
 function handleSearch(e) {
     e.preventDefault()
-    getMoviesArray()
-    .then(() => render())
+    getMoviesArray().then(() => render())
 }
 
-function getMoviesArray () {
-    return fetch(`${apiUrl}&s=${inputText.value}`)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data.Search)
-            searchArray = data.Search
-            moviesArray = searchArray.map(search => getMovieData(search.Title).then(() => data))
-            return moviesArray
-        })
+async function getMoviesArray () {
+    const res = await fetch(`${apiUrl}&s=${inputText.value}`)
+    const data = await res.json()
+    searchArray = data.Search
+    moviesArray = searchArray.map(search => getMovieData(search.Title))
+    return moviesArray
 }
 
-function getMovieData (title) {
-    return fetch(`${apiUrl}&t=${title}`)
-        .then(res => res.json())
-        .then(data => {
-            return data
-        })
+async function getMovieData (title) {
+    const res = await fetch(`${apiUrl}&t=${title}`)
+    const data = await res.json()
+    return data
 }
 
 function getMovieCardsHTML () {
-    return moviesArray.map(movie =>
-        (`
+    const cardsHtml = moviesArray.map(async movie =>{
+        const movieData = await movie
+        const html = (`
         <div class="movie-card">
-            <h2 class="movie-title">${movie.Title}</h2>
+            <h2 class="movie-title">${movieData.Title}</h2>
             <div class="rating">
                 <i class="fa-solid fa-star"></i>
-                <p class="rating-number">${movie.Ratings[0].Value}</p>
+                <p class="rating-number">${movieData.Ratings[0].Value}</p>
             </div>
-            <p class="description">${movie.Plot}</p>
-                <img class="movie-poster" src=${movie.Poster}>
+            <p class="description">${movieData.Plot}</p>
+                <img class="movie-poster" src=${movieData.Poster}>
             <div class="details">
-                <p class="run-time">${movie.Runtime}</p>
-                <p class="genre">${movie.Genre}</p>
+                <p class="run-time">${movieData.Runtime}</p>
+                <p class="genre">${movieData.Genre}</p>
             </div>
             <button class="add-btn">
                 <i class="fa-solid fa-plus"></i>
@@ -54,13 +49,15 @@ function getMovieCardsHTML () {
             </button>
         </div>
         `)
-    ).join("")
+        return html
+    })
+    return cardsHtml
 }
 
 function render() {
     if (searchArray.length) {
-        console.log(moviesArray)
-        //moviesContainer.innerHTML = getMovieCardsHTML()
+        const cardsHtml = getMovieCardsHTML()
+        moviesContainer.innerHTML = cardsHtml
     } else {
         moviesContainer.innerHTML = `
             <h2 style="text-align:center;">Unable to find what you’re looking for. Please try another search.</h2>
