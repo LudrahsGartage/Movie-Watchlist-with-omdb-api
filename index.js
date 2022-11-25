@@ -5,12 +5,15 @@ const searchBtn = document.getElementById("search-btn")
 const moviesContainer = document.querySelector("main")
 let searchArray = []
 let moviesArray
+let watchlistArray = localStorage.getItem("watchlist") ? JSON.parse(localStorage.getItem("watchlist")) : []
 
 searchBtn.addEventListener("click", (e) => handleSearch(e))
+moviesContainer.addEventListener("click",(e) => handleClick(e))
 
 function handleSearch(e) {
     e.preventDefault()
     setMoviesArray().then(() => render())
+    inputText.value = ""
 }
 
 async function setMoviesArray () {
@@ -28,11 +31,11 @@ async function getMovieData (title) {
 }
 
 async function getMovieCardsHTML () {
-    let html
     await moviesArray.forEach(async movie =>{
+        const element = document.createElement("div")
+        element.classList.add("movie-card")
         const movieData = await movie
-        html += `
-        <div class="movie-card">
+        element.innerHTML = `
             <h2 class="movie-title">${movieData.Title}</h2>
             <div class="rating">
                 <i class="fa-solid fa-star"></i>
@@ -44,22 +47,28 @@ async function getMovieCardsHTML () {
                 <p class="run-time">${movieData.Runtime}</p>
                 <p class="genre">${movieData.Genre}</p>
             </div>
-            <button class="add-btn">
-                <i class="fa-solid fa-plus"></i>
-                <p>Watchlist</p>
+            <button class="add-btn" data-id="${movieData.Title}">
+                <i class="fa-solid fa-plus" data-id="${movieData.Title}"></i>
+                <p data-id="${movieData.Title}">Watchlist</p>
             </button>
-        </div>
         `
+        moviesContainer.appendChild(element)
     })
-    return html
+}
+
+function handleClick(e){
+    if (e.path[0].classList == "add-btn" || e.path[1].classList == "add-btn") {
+        watchlistArray.push(e.target.dataset.id) 
+        localStorage.setItem("watchlist", JSON.stringify(watchlistArray))
+        console.log(localStorage.getItem("watchlist"))
+    }
 }
 
 function render() {
     if (searchArray.length) {
+        moviesContainer.innerHTML = ""
        getMovieCardsHTML()
-        .then((html) => {
-            moviesContainer.innerHTML = html
-        })
+       searchArray = []
     } else {
         moviesContainer.innerHTML = `
             <h2 style="text-align:center;">Unable to find what you are looking for. Please try another search.</h2>

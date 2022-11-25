@@ -10,6 +10,10 @@ i {
     color: grey;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 /* Banner */
 
 header {
@@ -22,12 +26,14 @@ header {
     text-align: center;
     padding: 5em;
     position: relative;
+    width: 100%;
 }
 
 .head-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 70%;
     max-width: 700px;
     margin: 0 auto;
 }
@@ -65,7 +71,6 @@ h1 {
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
     width: 70vw;
     max-width: 700px;
-    margin: 0 auto;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -108,7 +113,8 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 3em;
+    margin: 3em auto;
+    max-width: 80%;
 }
 
 .fa-film {
@@ -118,13 +124,15 @@ main {
 /* Movie-Cards */
 
 .movie-card {
-    max-width: 600px;
+    max-width: 700px;
+    min-width: 600px;
     width: 80%;
     margin: 1em 3em;
     display: grid;
     align-items: center;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: minmax(100px, 1.5fr) repeat(3, 1fr);
     grid-template-rows: 1fr 1fr 3fr;
+    max-height: 300px;
     grid-template-areas: 
     "image title title rating"
     "image details details button"
@@ -140,7 +148,6 @@ main {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    max-height: 300px;
 }
 
 /* rating */
@@ -167,7 +174,6 @@ main {
 
 .description {
     grid-area: description;
-    
     align-self: start;
     color: #6B7280;
     line-height: 1.25;
@@ -191,7 +197,7 @@ main {
 
 /* button */
 
-.add-btn {
+.add-btn, .remove-btn {
     grid-area: button;
     display: flex;
     justify-content: center;
@@ -203,16 +209,15 @@ main {
     cursor: pointer;
 }
 
-.add-btn > p {
+.add-btn > p, .remove-btn > p {
     margin: 0;
     color: #111827;
     font-size: 0.75rem;
 }
 
-.fa-plus {
+.fa-plus, .fa-minus {
     background-color: black;
     color: white;
     padding: 5px;
     border-radius: 50%;
 }
-
