@@ -207,6 +207,12 @@ main {
     background: none;
     gap: 10px;
     cursor: pointer;
+    transform: scale(1);
+    transition: transform, 120ms;
+}
+
+.add-btn:hover, .remove-btn:hover {
+    transform: scale(1.1);
 }
 
 .add-btn > p, .remove-btn > p {
