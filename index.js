@@ -28,19 +28,9 @@ async function getMovieData (title) {
 }
 
 async function getMovieCardsHTML () {
-    let html
-/**
- * run a search again in the browser and open the console.
- * follow the lines of code for the console.log output.
- * pay particular attention to what is output in the console
- * and how it is written in the file. and think about that
- * left to right, top to bottom synchronous code
- * then think about asyn again and how it gets skipped over.
- */
-    let timeStamp = Date.now() / 1000
-    await moviesArray.forEach(async movie =>{
-        const movieData = await movie
-        html += `
+   const htmlCards =  moviesArray.map( async movie =>{
+        const movieData =  await movie
+        return `
         <div class="movie-card">
             <h2 class="movie-title">${movieData.Title}</h2>
             <div class="rating">
@@ -59,25 +49,19 @@ async function getMovieCardsHTML () {
             </button>
         </div>
         `
-        console.log('returns after return of html', (Date.now() /1000) - timeStamp) //in s
     })
 
-    console.log('runs before async finishes, finishes first',(Date.now()/1000) - timeStamp) //in s
-    return html  //in html nothing gets initialize immediately returns. 
+    return Promise.all(htmlCards)
+    
 }
 
-function render() {
+async function render() {
     if (searchArray.length) {
-       getMovieCardsHTML()
-        .then((html) => {
+        
+      let cards =  await getMovieCardsHTML()
 
-            // html is undefined because of the async function
-            //returning later. so your return value is still
-            //uninitialized
+      moviesContainer.innerHTML = cards.join('')
 
-            console.log('returns here after undefined is passed, finishes second',html)
-            moviesContainer.innerHTML = html
-        })
     } else {
         moviesContainer.innerHTML = `
             <h2 style="text-align:center;">Unable to find what you are looking for. Please try another search.</h2>
