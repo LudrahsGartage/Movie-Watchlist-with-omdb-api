@@ -28,7 +28,7 @@ async function getMovieData (title) {
 }
 
 async function getMovieCardsHTML () {
-   const htmlCards =  moviesArray.map( async movie =>{
+   return  moviesArray.map( async movie =>{
         const movieData =  await movie
         return `
         <div class="movie-card">
@@ -58,9 +58,14 @@ async function getMovieCardsHTML () {
 async function render() {
     if (searchArray.length) {
         
-      let cards =  await getMovieCardsHTML()
+      let html =  await getMovieCardsHTML()
+      let cards = ''
 
-      moviesContainer.innerHTML = cards.join('')
+      for await(card of html) {
+        cards += card
+      }
+
+      moviesContainer.innerHTML = cards
 
     } else {
         moviesContainer.innerHTML = `
