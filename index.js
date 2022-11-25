@@ -28,10 +28,9 @@ async function getMovieData (title) {
 }
 
 async function getMovieCardsHTML () {
-    let html
-    await moviesArray.forEach(async movie =>{
-        const movieData = await movie
-        html += `
+   return  moviesArray.map( async movie =>{
+        const movieData =  await movie
+        return `
         <div class="movie-card">
             <h2 class="movie-title">${movieData.Title}</h2>
             <div class="rating">
@@ -51,15 +50,23 @@ async function getMovieCardsHTML () {
         </div>
         `
     })
-    return html
+
+    return Promise.all(htmlCards)
+    
 }
 
-function render() {
+async function render() {
     if (searchArray.length) {
-       getMovieCardsHTML()
-        .then((html) => {
-            moviesContainer.innerHTML = html
-        })
+        
+      let html =  await getMovieCardsHTML()
+      let cards = ''
+
+      for await(card of html) {
+        cards += card
+      }
+
+      moviesContainer.innerHTML = cards
+
     } else {
         moviesContainer.innerHTML = `
             <h2 style="text-align:center;">Unable to find what you are looking for. Please try another search.</h2>
