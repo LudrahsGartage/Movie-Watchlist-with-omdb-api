@@ -125,9 +125,8 @@ main {
 
 .movie-card {
     max-width: 700px;
-    min-width: 600px;
     width: 80%;
-    margin: 1em 3em;
+    margin: 1em 0;
     display: grid;
     align-items: center;
     grid-template-columns: minmax(100px, 1.5fr) repeat(3, 1fr);
@@ -186,7 +185,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    gap: 10px;
+    gap: 0.75em;
     color: #111827;
     font-size: 0.75rem;
 }
@@ -226,4 +225,23 @@ main {
     color: white;
     padding: 5px;
     border-radius: 50%;
+}
+
+@media (max-width:800px) {
+    header {padding:3em 0em}
+
+    main {
+        gap: 0px;
+        justify-content: start;
+        margin: 1em auto;
+        width: 100%;
+        max-width: none;
+    }
+
+    .movie-card {
+        max-width: none;
+        padding-left: 1em;
+        padding-right: 1em;
+        width: 100%;
+    }
 }
