@@ -8,6 +8,6 @@ Your watch list will be stored to local storage.
 Other page will get movies from local storage and display them
 You will be able to remove and add movies from the list here. 
 
-[Click to view!] (https://movie-watchlist-omdb.netlify.app/)
+[Click to view!](https://movie-watchlist-omdb.netlify.app/)
 
 [OMDB API Link](https://www.omdbapi.com/)
